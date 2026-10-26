@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FutureMindNova AI</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 30px 18px;
+      font-family: Arial, sans-serif;
+      background: #0b1020;
+      color: #f8fafc;
+    }
+    main { max-width: 760px; margin: auto; }
+    .brand { color: #a5b4fc; font-weight: bold; letter-spacing: 2px; }
+    h1 { font-size: clamp(34px, 7vw, 54px); margin-bottom: 12px; }
+    .intro { color: #cbd5e1; line-height: 1.7; }
+    .tools { display: flex; gap: 10px; flex-wrap: wrap; margin: 28px 0; }
+    button, textarea, select {
+      font: inherit;
+      border-radius: 10px;
+    }
+    button {
+      border: 1px solid #475569;
+      background: #172033;
+      color: white;
+      padding: 12px 15px;
+      cursor: pointer;
+    }
+    button.active, .primary { background: #6366f1; border-color: #6366f1; }
+    .panel {
+      background: #151d31;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 22px;
+    }
+    textarea, select {
+      width: 100%;
+      padding: 14px;
+      margin: 12px 0;
+      color: white;
+      background: #0b1020;
+      border: 1px solid #475569;
+    }
+    .note { color: #94a3b8; font-size: 13px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="brand">FUTUREMINDNOVA AI</p>
+    <h1>Your ideas.<br>Powered by AI.</h1>
+    <p class="intro">Simple tools to help you learn, create content, and grow your business.</p>
+
+    <div class="tools">
+      <button class="active" onclick="chooseTool('Study Assistant', this)">Study Assistant</button>
+      <button onclick="chooseTool('Content Creator', this)">Content Creator</button>
+      <button onclick="chooseTool('Business Assistant', this)">Business Assistant</button>
+    </div>
+
+    <section class="panel">
+      <h2 id="toolTitle">Study Assistant</h2>
+      <label for="question">What would you like help with?</label>
+      <textarea id="question" rows="5" placeholder="Type your question here..."></textarea>
+      <button class="primary" onclick="showMessage()">Try FutureMindNova AI</button>
+      <p id="answer" class="intro" aria-live="polite"></p>
+      <p class="note">AI answers will be connected in a later step. Never enter private information here.</p>
+    </section>
+
+    <p class="note">FutureMindNova AI — Built to help you learn, create, and grow.</p>
+  </main>
+
+  <script>
+    let selectedTool = 'Study Assistant';
+
+    function chooseTool(name, button) {
+      selectedTool = name;
+      document.getElementById('toolTitle').textContent = name;
+      document.querySelectorAll('.tools button').forEach(b => b.classList.remove('active'));
+      button.classList.add('active');
+      document.getElementById('answer').textContent = '';
+    }
+
+    function showMessage() {
+      const question = document.getElementById('question').value.trim();
+      const answer = document.getElementById('answer');
+
+      if (!question) {
+        answer.textContent = 'Please type a question first.';
+        return;
+      }
+
+      answer.textContent = 'Your homepage is working! The secure AI connection is the next step.';
+    }
+  </script>
+</body>
+</html>

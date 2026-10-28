@@ -70,58 +70,62 @@
 
     <p class="note">FutureMindNova AI — Built to help you learn, create, and grow.</p>
   </main>
+<script>
+  let selectedTool = 'Study Assistant';
 
-  <script>
-    let selectedTool = 'Study Assistant';
+  function chooseTool(name, button) {
+    selectedTool = name;
+    document.getElementById('toolTitle').textContent = name;
 
-    function chooseTool(name, button) {
-      selectedTool = name;
-      document.getElementById('toolTitle').textContent = name;
-      document.querySelectorAll('.tools button').forEach(b => b.classList.remove('active'));
-      button.classList.add('active');
-      document.getElementById('answer').textContent = '';
-    }
-
-    async function showMessage() {
-  const input = document.querySelector("textarea");
-  const message = input.value.trim();
-
-  if (!message) {
-    alert("Please enter a question first.");
-    return;
-  }
-
-  const button = document.querySelector("button");
-  button.disabled = true;
-  button.textContent = "Thinking...";
-
-  try {
-    const response = await fetch("/api/ask", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message })
+    document.querySelectorAll('.tools button').forEach(b => {
+      b.classList.remove('active');
     });
 
-    const data = await response.json();
-
-    alert(data.answer || data.error || "No answer received.");
-  } catch (error) {
-    alert("Could not connect to AI. Please try again.");
-  } finally {
-    button.disabled = false;
-    button.textContent = "Try FutureMindNova AI";
+    button.classList.add('active');
+    document.getElementById('answer').textContent = '';
   }
-} {
-      const question = document.getElementById('question').value.trim();
-      const answer = document.getElementById('answer');
 
-      if (!question) {
-        answer.textContent = 'Please type a question first.';
-        return;
+  async function showMessage() {
+    const input = document.getElementById('question');
+    const answer = document.getElementById('answer');
+    const button = document.querySelector('.panel button.primary');
+    const message = input.value.trim();
+
+    if (!message) {
+      answer.textContent = 'Please type a question first.';
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = 'Thinking...';
+    answer.textContent = 'Connecting to AI...';
+
+    try {
+      const response = await fetch('/api/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: selectedTool + ': ' + message
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'AI request failed.');
       }
 
-      answer.textContent = 'Your homepage is working! The secure AI connection is the next step.';
+      answer.textContent = data.answer || 'No answer received.';
+    } catch (error) {
+      answer.textContent =
+        error.message || 'Could not connect to AI. Please try again.';
+    } finally {
+      button.disabled = false;
+      button.textContent = 'Try FutureMindNova AI';
     }
-  </script>
+  }
+</script>
+  
+  
 </body>
 </html>

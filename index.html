@@ -101,7 +101,7 @@
     answer.textContent = 'Connecting to AI...';
 
     try {
-      const response = await fetch('/api/ask', {
+      const response = await fetch('https://soft-snow-dda8.swatihamdan70.workers.dev/api/ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

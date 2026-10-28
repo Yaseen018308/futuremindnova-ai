@@ -82,7 +82,36 @@
       document.getElementById('answer').textContent = '';
     }
 
-    function showMessage() {
+    async function showMessage() {
+  const input = document.querySelector("textarea");
+  const message = input.value.trim();
+
+  if (!message) {
+    alert("Please enter a question first.");
+    return;
+  }
+
+  const button = document.querySelector("button");
+  button.disabled = true;
+  button.textContent = "Thinking...";
+
+  try {
+    const response = await fetch("/api/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message })
+    });
+
+    const data = await response.json();
+
+    alert(data.answer || data.error || "No answer received.");
+  } catch (error) {
+    alert("Could not connect to AI. Please try again.");
+  } finally {
+    button.disabled = false;
+    button.textContent = "Try FutureMindNova AI";
+  }
+} {
       const question = document.getElementById('question').value.trim();
       const answer = document.getElementById('answer');
 

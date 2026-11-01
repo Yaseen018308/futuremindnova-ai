@@ -1,18 +1,15 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FutureMindNova AI</title>
-  <style> #answer,
-#response,
-.answer,
-.response {
-  white-space: pre-wrap;
-  line-height: 1.7;
-  overflow-wrap: break-word;
-}
-    * { box-sizing: border-box; }
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 30px 18px;
@@ -20,15 +17,40 @@
       background: #0b1020;
       color: #f8fafc;
     }
-    main { max-width: 760px; margin: auto; }
-    .brand { color: #a5b4fc; font-weight: bold; letter-spacing: 2px; }
-    h1 { font-size: clamp(34px, 7vw, 54px); margin-bottom: 12px; }
-    .intro { color: #cbd5e1; line-height: 1.7; }
-    .tools { display: flex; gap: 10px; flex-wrap: wrap; margin: 28px 0; }
-    button, textarea, select {
+
+    main {
+      max-width: 850px;
+      margin: auto;
+    }
+
+    .brand {
+      color: #a5b4fc;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 7vw, 54px);
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      color: #cbd5e1;
+      line-height: 1.7;
+    }
+
+    .tools {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 28px 0;
+    }
+
+    button, textarea {
       font: inherit;
       border-radius: 10px;
     }
+
     button {
       border: 1px solid #475569;
       background: #172033;
@@ -36,112 +58,391 @@
       padding: 12px 15px;
       cursor: pointer;
     }
-    button.active, .primary { background: #6366f1; border-color: #6366f1; }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    button.active, .primary {
+      background: #6366f1;
+      border-color: #6366f1;
+    }
+
     .panel {
       background: #151d31;
       border: 1px solid #334155;
       border-radius: 16px;
       padding: 22px;
     }
-    textarea, select {
+
+    textarea {
       width: 100%;
       padding: 14px;
       margin: 12px 0;
       color: white;
       background: #0b1020;
       border: 1px solid #475569;
+      resize: vertical;
     }
-    .note { color: #94a3b8; font-size: 13px; line-height: 1.6; }
+
+    .chat {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .message {
+      padding: 15px;
+      border-radius: 12px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+
+    .user-message {
+      background: #26365b;
+      border: 1px solid #475d91;
+    }
+
+    .ai-message {
+      background: #101a30;
+      border: 1px solid #334155;
+    }
+
+    .message-label {
+      font-size: 13px;
+      font-weight: bold;
+      color: #a5b4fc;
+      margin-bottom: 8px;
+    }
+
+    .message-content p {
+      margin: 8px 0;
+    }
+
+    .message-content h1,
+    .message-content h2,
+    .message-content h3 {
+      font-size: 19px;
+      margin: 16px 0 8px;
+    }
+
+    .message-content ul {
+      padding-left: 24px;
+    }
+
+    .message-content pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      background: #0b1020;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .message-content code {
+      background: #26334d;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    .clear-button {
+      background: #7f1d1d;
+      border-color: #991b1b;
+    }
+
+    .status {
+      color: #93c5fd;
+      font-size: 14px;
+      margin-top: 12px;
+    }
+
+    .empty {
+      color: #94a3b8;
+      text-align: center;
+      padding: 18px;
+      border: 1px dashed #475569;
+      border-radius: 10px;
+    }
+
+    .note {
+      color: #94a3b8;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 20px 12px;
+      }
+
+      .panel {
+        padding: 16px;
+      }
+
+      .tools button {
+        flex: 1 1 100%;
+      }
+    }
   </style>
 </head>
+
 <body>
   <main>
     <p class="brand">FUTUREMINDNOVA AI</p>
+
     <h1>Your ideas.<br>Powered by AI.</h1>
-    <p class="intro">Simple tools to help you learn, create content, and grow your business.</p>
+
+    <p class="intro">
+      Simple tools to help you learn, create content,
+      and grow your business.
+    </p>
 
     <div class="tools">
-      <button class="active" onclick="chooseTool('Study Assistant', this)">Study Assistant</button>
-      <button onclick="chooseTool('Content Creator', this)">Content Creator</button>
-      <button onclick="chooseTool('Business Assistant', this)">Business Assistant</button>
+      <button class="active"
+        onclick="chooseTool('Study Assistant', this)">
+        Study Assistant
+      </button>
+
+      <button onclick="chooseTool('Content Creator', this)">
+        Content Creator
+      </button>
+
+      <button onclick="chooseTool('Business Assistant', this)">
+        Business Assistant
+      </button>
     </div>
 
     <section class="panel">
       <h2 id="toolTitle">Study Assistant</h2>
-      <label for="question">What would you like help with?</label>
-      <textarea id="question" rows="5" placeholder="Type your question here..."></textarea>
-      <button class="primary" onclick="showMessage()">Try FutureMindNova AI</button>
-      <p id="answer" class="intro" aria-live="polite"></p>
-      <p class="note">AI answers will be connected in a later step. Never enter private information here.</p>
+
+      <label for="question">
+        What would you like help with?
+      </label>
+
+      <textarea
+        id="question"
+        rows="4"
+        placeholder="Type your question here..."
+      ></textarea>
+
+      <div class="actions">
+        <button class="primary" id="sendButton"
+          onclick="showMessage()">
+          Send Message
+        </button>
+
+        <button class="clear-button" id="clearButton"
+          onclick="clearChat()">
+          Clear Chat
+        </button>
+      </div>
+
+      <p id="status" class="status" aria-live="polite"></p>
+
+      <h3>Conversation History</h3>
+
+      <div id="chat" class="chat" aria-live="polite">
+        <div class="empty">
+          Your conversation will appear here.
+          Ask your first question!
+        </div>
+      </div>
+
+      <p class="note">
+        AI responses may contain mistakes. Never enter
+        passwords or private information here.
+      </p>
     </section>
 
-    <p class="note">FutureMindNova AI — Built to help you learn, create, and grow.</p>
+    <p class="note">
+      FutureMindNova AI — Built to help you learn,
+      create, and grow.
+    </p>
   </main>
-<script>
-  let selectedTool = 'Study Assistant';
 
-  function chooseTool(name, button) {
-    selectedTool = name;
-    document.getElementById('toolTitle').textContent = name;
+  <script>
+    let selectedTool = "Study Assistant";
+    let isLoading = false;
+    let chatHistory = [];
 
-    document.querySelectorAll('.tools button').forEach(b => {
-      b.classList.remove('active');
-    });
+    const API_URL =
+      "https://soft-snow-dda8.swatihamdan70.workers.dev/api/ask";
 
-    button.classList.add('active');
-    document.getElementById('answer').textContent = '';
-  }
+    function chooseTool(name, button) {
+      selectedTool = name;
 
-  async function showMessage() {
-    const input = document.getElementById('question');
-    const answer = document.getElementById('answer');
-    const button = document.querySelector('.panel button.primary');
-    const message = input.value.trim();
+      document.getElementById("toolTitle").textContent = name;
 
-    if (!message) {
-      answer.textContent = 'Please type a question first.';
-      return;
-    }
-
-    button.disabled = true;
-    button.textContent = 'Thinking...';
-    answer.textContent = 'Connecting to AI...';
-
-    try {
-      const response = await fetch('https://soft-snow-dda8.swatihamdan70.workers.dev/api/ask', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: selectedTool + ': ' + message
-        })
+      document.querySelectorAll(".tools button").forEach(b => {
+        b.classList.remove("active");
       });
 
-      const raw = await response.text();
-let data;
+      button.classList.add("active");
+    }
 
-try {
-  data = JSON.parse(raw);
-} catch {
-  throw new Error(
-    `Server returned an invalid response (HTTP ${response.status}). Please check the Worker deployment.`
-  );
-}
+    function escapeHTML(text) {
+      return text.replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      })[character]);
+    }
 
-      if (!response.ok) {
-        throw new Error(data.error || 'AI request failed.');
+    function formatAnswer(text) {
+      const safe = escapeHTML(text);
+
+      return safe
+        .replace(/^### (.*)$/gm, "<h3>$1</h3>")
+        .replace(/^## (.*)$/gm, "<h2>$1</h2>")
+        .replace(/^# (.*)$/gm, "<h1>$1</h1>")
+        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+        .replace(/`([^`]+)`/g, "<code>$1</code>")
+        .replace(/^- (.*)$/gm, "<li>$1</li>")
+        .replace(/(<li>.*<\/li>\n?)+/g, match =>
+          "<ul>" + match + "</ul>"
+        )
+        .replace(/\n/g, "<br>");
+    }
+
+    function renderChat() {
+      const chat = document.getElementById("chat");
+
+      if (chatHistory.length === 0) {
+        chat.innerHTML =
+          '<div class="empty">Your conversation will appear here. Ask your first question!</div>';
+        return;
       }
 
-      answer.textContent = data.answer || 'No answer received.';
-    } catch (error) {
-      answer.textContent =
-        error.message || 'Could not connect to AI. Please try again.';
-    } finally {
-      button.disabled = false;
-      button.textContent = 'Try FutureMindNova AI';
+      chat.innerHTML = "";
+
+      chatHistory.forEach(item => {
+        const message = document.createElement("div");
+        message.className =
+          "message " +
+          (item.role === "You" ? "user-message" : "ai-message");
+
+        const label = document.createElement("div");
+        label.className = "message-label";
+        label.textContent = item.role;
+
+        const content = document.createElement("div");
+        content.className = "message-content";
+
+        if (item.role === "You") {
+          content.textContent = item.text;
+        } else {
+          content.innerHTML = formatAnswer(item.text);
+        }
+
+        message.appendChild(label);
+        message.appendChild(content);
+        chat.appendChild(message);
+      });
+
+      chat.scrollTop = chat.scrollHeight;
     }
-  }
-</script>
-  
-  
+
+    function clearChat() {
+      if (isLoading) return;
+
+      chatHistory = [];
+      renderChat();
+
+      document.getElementById("status").textContent =
+        "Conversation cleared.";
+    }
+
+    async function showMessage() {
+      if (isLoading) return;
+
+      const input = document.getElementById("question");
+      const button = document.getElementById("sendButton");
+      const status = document.getElementById("status");
+
+      const message = input.value.trim();
+
+      if (!message) {
+        status.textContent = "Please type a question first.";
+        return;
+      }
+
+      isLoading = true;
+      button.disabled = true;
+      document.getElementById("clearButton").disabled = true;
+      button.textContent = "Thinking...";
+      status.textContent = "FutureMindNova AI is thinking...";
+
+      chatHistory.push({
+        role: "You",
+        text: message
+      });
+
+      renderChat();
+      input.value = "";
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: selectedTool + ": " + message
+          })
+        });
+
+        const raw = await response.text();
+        let data;
+
+        try {
+          data = JSON.parse(raw);
+        } catch {
+          throw new Error(
+            "Server returned an invalid response. Please try again."
+          );
+        }
+
+        if (!response.ok) {
+          throw new Error(data.error || "AI request failed.");
+        }
+
+        const answer = data.answer || "No answer received.";
+
+        chatHistory.push({
+          role: "FutureMindNova AI",
+          text: answer
+        });
+
+        status.textContent = "Answer received.";
+
+      } catch (error) {
+        chatHistory.push({
+          role: "FutureMindNova AI",
+          text: "Sorry, " +
+            (error.message || "Something went wrong.")
+        });
+
+        status.textContent = "Request unsuccessful.";
+
+      } finally {
+        isLoading = false;
+        button.disabled = false;
+        document.getElementById("clearButton").disabled = false;
+        button.textContent = "Send Message";
+
+        renderChat();
+      }
+    }
+  </script>
 </body>
 </html>

@@ -10,13 +10,16 @@
 
 body {
   margin: 0;
-  padding: 30px 18px;
+  padding: 25px 15px;
   font-family: Arial, sans-serif;
   background: #0b1020;
   color: #f8fafc;
 }
 
-main { max-width: 850px; margin: auto; }
+main {
+  max-width: 850px;
+  margin: auto;
+}
 
 .brand {
   color: #a5b4fc;
@@ -26,13 +29,16 @@ main { max-width: 850px; margin: auto; }
 
 h1 { font-size: clamp(34px, 7vw, 54px); }
 
-.intro { color: #cbd5e1; line-height: 1.7; }
+.intro {
+  color: #cbd5e1;
+  line-height: 1.7;
+}
 
 .tools, .actions {
   display: flex;
-  gap: 10px;
   flex-wrap: wrap;
-  margin: 18px 0;
+  gap: 10px;
+  margin: 20px 0;
 }
 
 button, textarea, select {
@@ -41,18 +47,31 @@ button, textarea, select {
 }
 
 button {
-  border: 1px solid #475569;
-  background: #172033;
+  padding: 12px 16px;
   color: white;
-  padding: 12px 15px;
+  background: #172033;
+  border: 1px solid #475569;
   cursor: pointer;
 }
 
-button:disabled { opacity: .6; cursor: not-allowed; }
+button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
 
 button.active, .primary {
   background: #6366f1;
   border-color: #6366f1;
+}
+
+.new-button {
+  background: #075985;
+  border-color: #0284c7;
+}
+
+.clear-button {
+  background: #991b1b;
+  border-color: #ef4444;
 }
 
 .panel {
@@ -63,6 +82,7 @@ button.active, .primary {
 }
 
 textarea, select {
+  display: block;
   width: 100%;
   padding: 14px;
   margin: 12px 0;
@@ -74,10 +94,10 @@ textarea, select {
 textarea { resize: vertical; }
 
 .chat {
-  margin-top: 24px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 15px;
+  margin-top: 20px;
 }
 
 .message {
@@ -98,9 +118,9 @@ textarea { resize: vertical; }
 }
 
 .message-label {
-  font-size: 13px;
-  font-weight: bold;
   color: #a5b4fc;
+  font-weight: bold;
+  font-size: 13px;
   margin-bottom: 8px;
 }
 
@@ -114,13 +134,8 @@ textarea { resize: vertical; }
 
 .message-content code {
   background: #26334d;
-  padding: 2px 5px;
+  padding: 3px 5px;
   border-radius: 4px;
-}
-
-.clear-button {
-  background: #7f1d1d;
-  border-color: #991b1b;
 }
 
 .status {
@@ -131,7 +146,7 @@ textarea { resize: vertical; }
 .empty {
   color: #94a3b8;
   text-align: center;
-  padding: 18px;
+  padding: 20px;
   border: 1px dashed #475569;
   border-radius: 10px;
 }
@@ -142,124 +157,142 @@ textarea { resize: vertical; }
   line-height: 1.6;
 }
 
-@media (max-width: 600px) {
-  body { padding: 20px 12px; }
-  .panel { padding: 16px; }
+@media(max-width:600px) {
+  body { padding: 18px 12px; }
+  .panel { padding: 15px; }
   .tools button { flex: 1 1 100%; }
+  .actions button { flex: 1 1 100%; }
 }
 </style>
 </head>
 
 <body>
 <main>
-  <p class="brand">FUTUREMINDNOVA AI</p>
 
-  <h1>Your ideas.<br>Powered by AI.</h1>
+<p class="brand">FUTUREMINDNOVA AI</p>
 
-  <p class="intro">
-    Simple tools to help you learn, create content,
-    and grow your business.
-  </p>
+<h1>Your ideas.<br>Powered by AI.</h1>
 
-  <div class="tools">
-    <button class="active" onclick="chooseTool('Study Assistant', this)">
-      Study Assistant
-    </button>
-    <button onclick="chooseTool('Content Creator', this)">
-      Content Creator
-    </button>
-    <button onclick="chooseTool('Business Assistant', this)">
-      Business Assistant
-    </button>
-  </div>
+<p class="intro">
+Simple tools to help you learn, create content,
+and grow your business.
+</p>
 
-  <section class="panel">
-    <h2 id="toolTitle">Study Assistant</h2>
+<div class="tools">
+  <button class="active" onclick="chooseTool('Study Assistant',this)">
+    Study Assistant
+  </button>
 
-    <label for="question">What would you like help with?</label>
+  <button onclick="chooseTool('Content Creator',this)">
+    Content Creator
+  </button>
 
-    <textarea id="question" rows="4"
-      placeholder="Type your question here..."></textarea>
+  <button onclick="chooseTool('Business Assistant',this)">
+    Business Assistant
+  </button>
+</div>
 
-    <div class="actions">
-      <button class="primary" id="sendButton" onclick="showMessage()">
-        Send Message
-      </button>
-      <button onclick="newChat()">+ New Chat</button>
-      <button class="clear-button" id="clearButton" onclick="clearChat()">
-        Clear Chat
-      </button>
-    </div>
+<section class="panel">
 
-    <label for="savedChats">Previous conversations</label>
-    <select id="savedChats" onchange="switchChat(this.value)">
-      <option value="">Current conversation</option>
-    </select>
+<h2 id="toolTitle">Study Assistant</h2>
 
-    <p id="status" class="status" aria-live="polite"></p>
+<label for="question">What would you like help with?</label>
 
-    <h3>Conversation History</h3>
+<textarea id="question" rows="4"
+placeholder="Type your question here..."></textarea>
 
-    <div id="chat" class="chat" aria-live="polite">
-      <div class="empty">Your conversation will appear here.</div>
-    </div>
+<div class="actions">
 
-    <p class="note">
-      Conversations are saved only in this browser on this device.
-      Clearing browser data may remove them. AI responses may contain mistakes.
-      Never enter passwords or private information.
-    </p>
-  </section>
+  <button class="primary" id="sendButton" onclick="showMessage()">
+    Send Message
+  </button>
 
-  <p class="note">
-    FutureMindNova AI — Built to help you learn, create, and grow.
-  </p>
+  <button class="new-button" id="newButton" onclick="newChat()">
+    + New Chat
+  </button>
+
+  <button class="clear-button" id="clearButton" onclick="clearChat()">
+    Clear Chat
+  </button>
+
+</div>
+
+<p id="status" class="status" aria-live="polite"></p>
+
+<h3>Previous Conversations</h3>
+
+<select id="savedChats" onchange="switchChat(this.value)">
+  <option value="">Select a conversation</option>
+</select>
+
+<h3>Conversation History</h3>
+
+<div id="chat" class="chat" aria-live="polite">
+  <div class="empty">Your conversation will appear here.</div>
+</div>
+
+<p class="note">
+Your conversations are saved in this browser on this device.
+Clearing browser data may remove them. Never enter passwords
+or private information. AI responses may contain mistakes.
+</p>
+
+</section>
+
+<p class="note">
+FutureMindNova AI — Built to help you learn, create, and grow.
+</p>
+
 </main>
 
 <script>
-let selectedTool = "Study Assistant";
-let isLoading = false;
-
 const API_URL =
-  "https://soft-snow-dda8.swatihamdan70.workers.dev/api/ask";
+"https://soft-snow-dda8.swatihamdan70.workers.dev/api/ask";
 
 const STORAGE_KEY = "futuremindnova_chats_v2";
 
+let selectedTool = "Study Assistant";
 let sessions = [];
 let currentChatId = null;
+let isLoading = false;
 
 function createId() {
-  return Date.now().toString() + Math.random().toString(36).slice(2);
+  return Date.now().toString() +
+    Math.random().toString(36).slice(2);
 }
 
-function loadChats() {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    sessions = saved ? JSON.parse(saved) : [];
-
-    if (!Array.isArray(sessions)) sessions = [];
-  } catch {
-    sessions = [];
-  }
-
-  if (sessions.length === 0) {
-    createSession();
-  } else {
-    currentChatId = sessions[0].id;
-  }
-
-  updateChatList();
-  renderChat();
+function currentSession() {
+  return sessions.find(s => s.id === currentChatId);
 }
 
 function saveChats() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
-    updateChatList();
   } catch {
     document.getElementById("status").textContent =
       "Could not save conversations in this browser.";
   }
+  updateChatList();
+}
+
+function loadChats() {
+  try {
+    sessions = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    if (!Array.isArray(sessions)) sessions = [];
+  } catch {
+    sessions = [];
+  }
+
+  if (sessions.length > 0) {
+    currentChatId = sessions[0].id;
+    selectedTool = sessions[0].tool || "Study Assistant";
+  } else {
+    createSession();
+  }
+
+  updateToolButtons();
+  updateChatList();
+  renderChat();
 }
 
 function createSession() {
@@ -276,24 +309,18 @@ function createSession() {
   saveChats();
 }
 
-function currentSession() {
-  return sessions.find(s => s.id === currentChatId);
-}
-
 function newChat() {
   if (isLoading) return;
 
-  createSession();
   selectedTool = "Study Assistant";
-
-  document.querySelectorAll(".tools button").forEach((button, index) => {
-    button.classList.toggle("active", index === 0);
-  });
+  createSession();
 
   document.getElementById("toolTitle").textContent = selectedTool;
   document.getElementById("question").value = "";
-  document.getElementById("status").textContent = "New conversation started.";
+  document.getElementById("status").textContent =
+    "New conversation started.";
 
+  updateToolButtons();
   renderChat();
 }
 
@@ -314,29 +341,6 @@ function clearChat() {
     "Current conversation cleared.";
 }
 
-function switchChat(id) {
-  if (isLoading || !id) return;
-
-  const session = sessions.find(s => s.id === id);
-  if (!session) return;
-
-  currentChatId = id;
-  selectedTool = session.tool || "Study Assistant";
-
-  document.getElementById("toolTitle").textContent = selectedTool;
-
-  document.querySelectorAll(".tools button").forEach(button => {
-    button.classList.toggle(
-      "active",
-      button.textContent.trim() === selectedTool
-    );
-  });
-
-  renderChat();
-  document.getElementById("status").textContent =
-    "Previous conversation opened.";
-}
-
 function updateChatList() {
   const select = document.getElementById("savedChats");
   if (!select) return;
@@ -351,6 +355,23 @@ function updateChatList() {
   });
 
   select.value = currentChatId || "";
+}
+
+function switchChat(id) {
+  if (isLoading || !id) return;
+
+  const session = sessions.find(s => s.id === id);
+  if (!session) return;
+
+  currentChatId = id;
+  selectedTool = session.tool || "Study Assistant";
+
+  document.getElementById("toolTitle").textContent = selectedTool;
+  updateToolButtons();
+  renderChat();
+
+  document.getElementById("status").textContent =
+    "Previous conversation opened.";
 }
 
 function chooseTool(name, button) {
@@ -371,6 +392,15 @@ function chooseTool(name, button) {
   }
 }
 
+function updateToolButtons() {
+  document.querySelectorAll(".tools button").forEach(button => {
+    button.classList.toggle(
+      "active",
+      button.textContent.trim() === selectedTool
+    );
+  });
+}
+
 function escapeHTML(text) {
   return text.replace(/[&<>"']/g, character => ({
     "&": "&amp;",
@@ -382,9 +412,7 @@ function escapeHTML(text) {
 }
 
 function formatAnswer(text) {
-  const safe = escapeHTML(text);
-
-  return safe
+  return escapeHTML(text)
     .replace(/^### (.*)$/gm, "<h3>$1</h3>")
     .replace(/^## (.*)$/gm, "<h2>$1</h2>")
     .replace(/^# (.*)$/gm, "<h1>$1</h1>")
@@ -440,7 +468,6 @@ async function showMessage() {
 
   const input = document.getElementById("question");
   const button = document.getElementById("sendButton");
-  const clearButton = document.getElementById("clearButton");
   const status = document.getElementById("status");
 
   const message = input.value.trim();
@@ -450,17 +477,16 @@ async function showMessage() {
     return;
   }
 
-  let session = currentSession();
+  if (!currentSession()) createSession();
 
-  if (!session) {
-    createSession();
-    session = currentSession();
-  }
+  const session = currentSession();
 
   isLoading = true;
   button.disabled = true;
-  clearButton.disabled = true;
+  document.getElementById("newButton").disabled = true;
+  document.getElementById("clearButton").disabled = true;
   button.textContent = "Thinking...";
+
   status.textContent = "FutureMindNova AI is thinking...";
 
   session.messages.push({ role: "You", text: message });
@@ -520,12 +546,14 @@ async function showMessage() {
 
     isLoading = false;
     button.disabled = false;
-    clearButton.disabled = false;
+    document.getElementById("newButton").disabled = false;
+    document.getElementById("clearButton").disabled = false;
     button.textContent = "Send Message";
   }
 }
 
 loadChats();
 </script>
+
 </body>
 </html>
